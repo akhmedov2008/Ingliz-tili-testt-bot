@@ -11,11 +11,17 @@
 #
 # CHANNELS = ["-1001798490099", "-1001691825311"]
 
-import os
+# import os
 
 # .env faylini ichidan quyidegilRNI O'QIYMIZ
-BOT_TOKEN = str(os.environ.get("BOT_TOKEN")) #BOT TOKEN
-ADMINS = list(os.environ.get("ADMINS")) #ADMINLAR ROYHATI
+# BOT_TOKEN = str(os.environ.get("BOT_TOKEN")) #BOT TOKEN
+# ADMINS = list(os.environ.get("ADMINS")) #ADMINLAR ROYHATI
 # IP = str(os.environ.get("ip")) #Xosting ip manzil
-IP = str("localhost")
-CHANNELS = list(os.environ.get("CHANNELS"))
+# IP = str("localhost")
+# CHANNELS = list(os.environ.get("CHANNELS"))
+
+
+BOT_TOKEN = str("5018029075:AAFTy75Z4H0ZcPtFkfyn3y7eRLtqQ2oRK18")
+ADMINS = list("1913708962,1467555501")
+CHANNELS = ["-1001798490099", "-1001691825311"]
+IP = ("localhost")
