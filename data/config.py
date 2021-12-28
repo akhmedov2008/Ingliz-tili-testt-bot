@@ -16,5 +16,6 @@ import os
 # .env faylini ichidan quyidegilRNI O'QIYMIZ
 BOT_TOKEN = str(os.environ.get("BOT_TOKEN")) #BOT TOKEN
 ADMINS = list(os.environ.get("ADMINS")) #ADMINLAR ROYHATI
-IP = str(os.environ.get("ip")) #Xosting ip manzil
+# IP = str(os.environ.get("ip")) #Xosting ip manzil
+IP = str("localhost")
 CHANNELS = list(os.environ.get("CHANNELS"))
