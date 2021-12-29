@@ -11,7 +11,7 @@ from aiogram.dispatcher.filters.builtin import Command
 @dp.message_handler(IsGroup(),Command('start'))
 async def bot_start_group(message: types.Message):
     await message.answer(f"Salom, {message.from_user.full_name}!, Siz guruhdasiz")
-
+foydalanuvchi = []
 
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
@@ -36,8 +36,9 @@ async def show_channels(message: types.Message):
                          disable_web_page_preview=True)
     # Adminga xabar beramiz
     # count = db.count_users()[0]
-    # msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} ta foydalanuvchi kirdi."
-    # await bot.send_message(chat_id=ADMINS[0], text=msg)
+    msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} ta foydalanuvchi kirdi."
+    foydalanuvchi.append(message.from_user.id)
+    await bot.send_message(chat_id=ADMINS[0], text=msg)
 
 
 @dp.callback_query_handler(IsGroup(),text="check_subs")
@@ -49,6 +50,7 @@ async def checker(call: types.CallbackQuery):
                                           channel=channel)
         channel = await bot.get_chat(channel)
         if status:
+            call.del()
             result += f"<b>{channel.title}</b> kanaliga obuna bo'lgansiz! ✅\n\n"
         else:
             invite_link = await channel.export_invite_link()
