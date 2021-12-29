@@ -45,7 +45,7 @@ async def show_channels(message: types.Message):
         msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} {len(foydalanuvchi)} ta foydalanuvchi kirdi."
         await bot.send_message(chat_id=ADMINS[0], text=msg)
 
-@dp.message_handler(Command('Foydalanuvchilar'))
+@dp.message_handler(IsPrivate(),Command('Foydalanuvchilar'))
 async def bot_start_group(message: types.Message):
     for foydalanuvchii in foydalanuvchi:
         await message.reply(f"Foydalanuvchi: {foydalanuvchii}")
