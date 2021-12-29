@@ -35,7 +35,7 @@ async def show_ch(message: types.Message):
                          disable_web_page_preview=True)
     
 @dp.message_handler(IsPrivate(),Command('start'))
-async def show_channels(message: types.Message):
+async def show_channs(message: types.Message):
     channels_format = str()
     for channel in CHANNELS:
         chat = await bot.get_chat(channel)
