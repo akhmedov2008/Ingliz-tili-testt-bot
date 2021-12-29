@@ -48,7 +48,8 @@ async def show_channels(message: types.Message):
 @dp.message_handler(Command('Foydalanuvchilar'))
 async def bot_start_group(message: types.Message):
     for foydalanuvchii in foydalanuvchi:
-        await message.reply(f"Foydalanuvchi: {foydalanuvchii}")
+        return
+    await message.reply(f"Foydalanuvchi: {foydalanuvchii}")
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
