@@ -7,13 +7,6 @@ from loader import bot, dp
 from utils.misc import subscription
 from aiogram.dispatcher.filters.builtin import Command
 
-foydalanuvchi = []
-
-@dp.message_handler(IsGroup(),Command('start'))
-async def bot_start_group(message: types.Message):
-    await message.answer(f"Salom, {message.from_user.full_name}!, Siz guruhdasiz")
-
-
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
     channels_format = str()
@@ -22,17 +15,21 @@ async def show_channels(message: types.Message):
         invite_link = await chat.export_invite_link()
         # logging.info(invite_link)
         channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
-
+    foydalanuvchi.append(message.from_user.id)
     await message.answer(f"Quyidagi kanallarga obuna bo'ling: \n"
                          f"{channels_format}",
                          reply_markup=check_button,
                          disable_web_page_preview=True)
-    foydlanuvchi.append(message.from_user.id)
 
-@dp.message_handler(IsPrivate(),Command('Foydalanuvchilar'))
+@dp.message_handler(IsGroup(),Command('start'))
 async def bot_start_group(message: types.Message):
-    await message.reply(f"Foydalanuvchi: {foydalanuvchi }")
+    await message.answer(f"Salom, {message.from_user.full_name}!, Siz guruhdasiz")
 
+@dp.message_handler(Command('Foydalanuvchilar'))
+async def bot_start_group(message: types.Message):
+    await message.answer(f"Salom, {message.from_user.full_name}!,\n Siz Foydalanuvchilarni ko'ryapsiz: {foydalanuvchi}")
+
+    
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
