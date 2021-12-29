@@ -40,7 +40,7 @@ async def show_channels(message: types.Message):
     # await bot.send_message(chat_id=ADMINS[0], text=msg)
 
 
-@dp.callback_query_handler(text="check_subs")
+@dp.callback_query_handler(IsGroup(),text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
     result = str()
