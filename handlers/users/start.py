@@ -5,12 +5,9 @@ from data.config import CHANNELS
 from keyboards.inline.subscription import check_button
 from loader import bot, dp
 from utils.misc import subscription
+from aiogram.dispatcher.filters.builtin import Command,CommandStart
 
-@dp.message_handler(IsGroup(),commands=['start'])
-async def show_g(message: types.Message):
-    await message.answer(f"Salom {message.from_user.full_name}, Siz Guruhdasiz")
-
-@dp.message_handler(IsPrivate(),commands=['start'])
+@dp.message_handler(IsPrivate(),CommandStart())
 async def show_channels(message: types.Message):
     channels_format = str()
     for channel in CHANNELS:
@@ -24,6 +21,10 @@ async def show_channels(message: types.Message):
                          reply_markup=check_button,
                          disable_web_page_preview=True)
 
+
+@dp.message_handler(IsGroup(),commands=['start'])
+async def show_g(message: types.Message):
+    await message.answer(f"Salom {message.from_user.full_name}, Siz Guruhdasiz")
 
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
