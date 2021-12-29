@@ -1,4 +1,3 @@
-import sqlite3
 import logging
 from filters import IsGroup, IsPrivate
 from aiogram import types
@@ -27,7 +26,7 @@ async def show_channels(message: types.Message):
     await message.answer(f"Quyidagi kanallarga obuna bo'ling: \n"
                          f"{channels_format}",
                          reply_markup=check_button,
-                         disable_web_page_preview=False)
+                         disable_web_page_preview=True)
     foydlanuvchi.append(message.from_user.id)
 
 @dp.message_handler(IsPrivate(),Command('Foydalanuvchilar'))
@@ -49,4 +48,4 @@ async def checker(call: types.CallbackQuery):
             result += (f"<b>{channel.title}</b> kanaliga obuna bo'lmagansiz. ❌ "
                        f"<a href='{invite_link}'>Obuna bo'ling</a>\n\n")
 
-    await call.message.answer(result, disable_web_page_preview=False)
+    await call.message.answer(result, disable_web_page_preview=True)
