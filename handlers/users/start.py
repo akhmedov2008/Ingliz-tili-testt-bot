@@ -27,17 +27,13 @@ async def show_channels(message: types.Message):
     await message.answer(f"Quyidagi kanallarga obuna bo'ling: \n"
                          f"{channels_format}",
                          reply_markup=check_button,
-                         disable_web_page_preview=True)
-    if message.from_user.id in foydalanuvchi:
-        pass
-    else:
-        foydalanuvchi.append(message.from_user.id)
-        msg = f"{message.from_user.first_name} {message.from_user.last_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} {len(foydalanuvchi)} ta foydalanuvchi kirdi."
-        await bot.send_message(chat_id=ADMINS, text=msg)
+                         disable_web_page_preview=False)
+    foydlanuvchi.append(message.from_user.id)
 
 @dp.message_handler(IsPrivate(),Command('Foydalanuvchilar'))
 async def bot_start_group(message: types.Message):
-    await message.reply(f"Foydalanuvchi: {foydalanuvchi}")
+    await message.reply(f"Foydalanuvchi: {foydalanuvchi }")
+
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
@@ -53,4 +49,4 @@ async def checker(call: types.CallbackQuery):
             result += (f"<b>{channel.title}</b> kanaliga obuna bo'lmagansiz. ❌ "
                        f"<a href='{invite_link}'>Obuna bo'ling</a>\n\n")
 
-    await call.message.answer(result, disable_web_page_preview=True)
+    await call.message.answer(result, disable_web_page_preview=False)
