@@ -7,7 +7,34 @@ from loader import bot, dp
 from utils.misc import subscription
 from aiogram.dispatcher.filters.builtin import Command,CommandStart
 
-@dp.message_handler(IsPrivate(),CommandStart())
+@dp.message_handler(IsPrivate(),command['startt'])
+async def show_channels(message: types.Message):
+    channels_format = str()
+    for channel in CHANNELS:
+        chat = await bot.get_chat(channel)
+        invite_link = await chat.export_invite_link()
+        # logging.info(invite_link)
+        channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
+
+    await message.answer(f"Quyidagi kanallarga obuna bo'ling: \n"
+                         f"{channels_format}",
+                         reply_markup=check_button,
+                         disable_web_page_preview=True)
+@dp.message_handler(IsPrivate(),command['start'])
+async def show_ch(message: types.Message):
+    channels_format = str()
+    for channel in CHANNELS:
+        chat = await bot.get_chat(channel)
+        invite_link = await chat.export_invite_link()
+        # logging.info(invite_link)
+        channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
+
+    await message.answer(f"Quyidagi kanallarga obuna bo'ling: \n"
+                         f"{channels_format}",
+                         reply_markup=check_button,
+                         disable_web_page_preview=True)
+    
+@dp.message_handler(IsPrivate(),Command('start'))
 async def show_channels(message: types.Message):
     channels_format = str()
     for channel in CHANNELS:
@@ -21,7 +48,7 @@ async def show_channels(message: types.Message):
                          reply_markup=check_button,
                          disable_web_page_preview=True)
 
-
+    
 @dp.message_handler(IsGroup(),commands=['start'])
 async def show_g(message: types.Message):
     await message.answer(f"Salom {message.from_user.full_name}, Siz Guruhdasiz")
