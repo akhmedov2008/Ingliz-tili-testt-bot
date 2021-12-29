@@ -7,6 +7,8 @@ from loader import bot, dp
 from utils.misc import subscription
 from aiogram.dispatcher.filters.builtin import Command
 
+foydalanuvchi = []
+
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
     channels_format = str()
