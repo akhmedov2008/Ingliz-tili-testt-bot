@@ -11,6 +11,11 @@ from loader import dp, bot
 from states.newpost import NewPost
 
 
+@dp.message_handler(IsGroup(), Command("yangi_post"))
+async def create_post(message: Message):
+    await message.answer("Bu buyruqni bajarish uchun\n Iltimos <a href='https://t.me/ingliz_tili_testt_bot'>BOT ga o'ting</a>")
+    await NewPost.NewMessage.set()
+    
 @dp.message_handler(IsPrivate(), Command("yangi_post"))
 async def create_post(message: Message):
     await message.answer("Chop etish uchun post yuboring.")
