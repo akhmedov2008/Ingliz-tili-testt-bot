@@ -8,14 +8,13 @@ from loader import bot, dp
 from utils.misc import subscription
 from aiogram.dispatcher.filters.builtin import Command
 
+foydalanuvchi = []
+
 @dp.message_handler(IsGroup(),Command('start'))
 async def bot_start_group(message: types.Message):
     await message.answer(f"Salom, {message.from_user.full_name}!, Siz guruhdasiz")
-foydalanuvchi = []
 
-@dp.message_handler(Command('Foydalanuvchilar'))
-async def Foydalanuvchilar(message: types.Message):
-    await message.reply(f"Foydalanuvchilar: {foydalanuvchi}")
+
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
     # name = message.from_user.full_name
@@ -39,12 +38,18 @@ async def show_channels(message: types.Message):
                          disable_web_page_preview=True)
     # Adminga xabar beramiz
     # count = db.count_users()[0]
-    msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} ta foydalanuvchi kirdi."
-    foydalanuvchi.append(message.from_user.id)
-    await bot.send_message(chat_id=ADMINS[0], text=msg)
+    if message.from_user.id in foydalanuvchi:
+        pass
+    else:
+        foydalanuvchi.append(message.from_user.id)
+        msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} {len(foydalanuvchi)} ta foydalanuvchi kirdi."
+        await bot.send_message(chat_id=ADMINS[0], text=msg)
 
-
-@dp.callback_query_handler(IsGroup(),text="check_subs")
+@dp.message_handler(Command('start'))
+async def bot_start_group(message: types.Message):
+    for foydalanuvchii in foydalanuvchi:
+        await message.reply(f"Foydalanuvchi: {foydalanuvchii}")
+@dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
     result = str()
