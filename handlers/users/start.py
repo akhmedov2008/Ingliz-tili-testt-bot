@@ -13,6 +13,9 @@ async def bot_start_group(message: types.Message):
     await message.answer(f"Salom, {message.from_user.full_name}!, Siz guruhdasiz")
 foydalanuvchi = []
 
+@dp.message_handler(Command('Foydalanuvchilar'))
+async def Foydalanuvchilar(message: types.Message):
+    await message.reply(f"Foydalanuvchilar: {foydalanuvchi}")
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
     # name = message.from_user.full_name
@@ -50,7 +53,6 @@ async def checker(call: types.CallbackQuery):
                                           channel=channel)
         channel = await bot.get_chat(channel)
         if status:
-            call.del()
             result += f"<b>{channel.title}</b> kanaliga obuna bo'lgansiz! ✅\n\n"
         else:
             invite_link = await channel.export_invite_link()
