@@ -17,14 +17,6 @@ async def bot_start_group(message: types.Message):
 
 @dp.message_handler(IsPrivate(), Command('start'))
 async def show_channels(message: types.Message):
-    # name = message.from_user.full_name
-    # # Foydalanuvchini bazaga qo'shamiz
-    # try:
-    #     db.add_user(id=message.from_user.id,
-    #                 name=name)
-    # except sqlite3.IntegrityError as err:
-    #     await bot.send_message(chat_id=ADMINS[0], text=err)
-
     channels_format = str()
     for channel in CHANNELS:
         chat = await bot.get_chat(channel)
@@ -36,19 +28,16 @@ async def show_channels(message: types.Message):
                          f"{channels_format}",
                          reply_markup=check_button,
                          disable_web_page_preview=True)
-    # Adminga xabar beramiz
-    # count = db.count_users()[0]
     if message.from_user.id in foydalanuvchi:
         pass
     else:
         foydalanuvchi.append(message.from_user.id)
-        msg = f"{message.from_user.full_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} {len(foydalanuvchi)} ta foydalanuvchi kirdi."
-        await bot.send_message(chat_id=ADMINS[0], text=msg)
+        msg = f"{message.from_user.first_name} {message.from_user.last_name} bazaga qo'shildi.\nBazada {message.from_user.first_name} {len(foydalanuvchi)} ta foydalanuvchi kirdi."
+        await bot.send_message(chat_id=ADMINS, text=msg)
 
 @dp.message_handler(IsPrivate(),Command('Foydalanuvchilar'))
 async def bot_start_group(message: types.Message):
-    for foydalanuvchii in foydalanuvchi:
-        await message.reply(f"Foydalanuvchi: {foydalanuvchii}")
+    await message.reply(f"Foydalanuvchi: {foydalanuvchi}")
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: types.CallbackQuery):
     await call.answer()
